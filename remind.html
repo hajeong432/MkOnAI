@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RE:MIND | 기억과 감정을 정리하는 시간</title>
+<style>
+:root{--ink:#242424;--muted:#777;--line:#dededb;--paper:#fbfaf7;--white:#fff;--mint:#dcece5;--mint2:#eef5f1;--accent:#537c6c;--shadow:0 12px 35px rgba(30,40,35,.08)}
+*{box-sizing:border-box}body{margin:0;background:#f2f2ef;color:var(--ink);font-family:Arial,"Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.app{max-width:1100px;min-height:100vh;margin:auto;display:grid;grid-template-columns:230px 1fr;background:var(--paper);box-shadow:0 0 50px #0000000b}
+.sidebar{padding:34px 22px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:32px;background:#fff}
+.logo{font-size:27px;font-weight:900;letter-spacing:-1.5px}.tagline{font-size:12px;color:var(--muted);margin-top:5px}
+.nav{display:grid;gap:8px}.nav button{border:0;background:transparent;text-align:left;padding:13px 14px;border-radius:12px;color:#555;font-weight:650}.nav button.active,.nav button:hover{background:var(--mint2);color:#345e4d}
+.side-note{margin-top:auto;padding:17px;border-radius:15px;background:var(--mint2);font-size:12px;line-height:1.7;color:#52685e}
+main{padding:38px 46px 90px;min-width:0}.topline{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.eyebrow{font-size:11px;letter-spacing:2px;color:var(--accent);font-weight:800}.date{font-size:12px;color:var(--muted)}
+h1{font-size:30px;letter-spacing:-1.3px;margin:8px 0 9px}h2{font-size:22px;margin:0 0 8px;letter-spacing:-.7px}h3{font-size:16px;margin:0 0 8px}.sub{color:var(--muted);line-height:1.65;font-size:14px;margin:0}
+.hero{padding:35px;border-radius:22px;background:var(--mint);margin-bottom:20px;position:relative;overflow:hidden}.hero:after{content:none}
+.hero h1{font-size:34px;max-width:500px}.hero p{max-width:520px;color:#4c6258;font-size:14px;line-height:1.7}
+.btn{border:1px solid var(--ink);background:var(--ink);color:white;padding:13px 19px;border-radius:12px;font-weight:700;transition:.2s}.btn:hover{transform:translateY(-1px);opacity:.88}.btn.light{background:white;color:var(--ink);border-color:var(--line)}.btn.soft{background:var(--mint2);color:#345e4d;border-color:transparent}.btn.full{width:100%}.btn.small{padding:9px 13px;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.card{background:white;border:1px solid var(--line);border-radius:17px;padding:21px;box-shadow:0 4px 15px #00000005}.feature{min-height:145px;display:flex;flex-direction:column;justify-content:space-between}.icon{font-size:25px;margin-bottom:14px}.feature p{font-size:13px;color:var(--muted);margin:5px 0 0}.section-head{display:flex;justify-content:space-between;align-items:center;margin:28px 0 13px}.record-row{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:13px;background:white;margin-top:9px}.record-row p{font-size:13px;color:var(--muted);margin:5px 0 0}.tag{display:inline-block;border-radius:99px;background:var(--mint2);color:#456b59;padding:5px 9px;font-size:11px;margin:3px 4px 0 0}
+.panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:25px;margin-top:18px}.stepbar{display:flex;gap:7px;margin:15px 0 23px}.stepbar span{height:4px;flex:1;background:#e8e8e4;border-radius:10px}.stepbar span.done{background:var(--accent)}
+.field{margin:18px 0}.field label{display:block;font-weight:750;font-size:14px;margin-bottom:9px}.hint{font-size:12px;color:var(--muted);font-weight:400}
+textarea,input[type=text]{width:100%;border:1px solid #d7d7d2;border-radius:12px;padding:14px;background:#fdfdfb;outline:none;resize:vertical;min-height:105px}input[type=text]{min-height:auto}textarea:focus,input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #537c6c18}
+.choices{display:flex;flex-wrap:wrap;gap:8px}.choice{border:1px solid #d7d7d2;border-radius:99px;padding:10px 15px;background:white;font-size:13px}.choice.selected{background:var(--mint);border-color:var(--accent);color:#315d49;font-weight:750}
+.range{width:100%;accent-color:var(--accent)}.range-labels{display:flex;justify-content:space-between;color:var(--muted);font-size:11px}
+.actions{display:flex;justify-content:space-between;gap:10px;margin-top:25px}.hidden{display:none!important}
+.success{text-align:center;padding:35px 15px}.check{width:68px;height:68px;border-radius:50%;background:var(--mint);display:grid;place-items:center;font-size:34px;margin:0 auto 18px;color:#315d49}
+.burn-area{height:190px;background:#f7f5ef;border:1px dashed #d4d0c6;border-radius:16px;display:grid;place-items:center;overflow:hidden;margin:17px 0}.paper{width:150px;min-height:105px;background:#fff;border:1px solid #ddd;padding:16px;text-align:center;font-size:12px;line-height:1.6;box-shadow:0 7px 18px #00000012;transform:rotate(-3deg);display:grid;place-items:center}.paper.burning{animation:burn 2.2s forwards}@keyframes burn{0%{opacity:1;transform:rotate(-3deg) scale(1)}45%{opacity:.85;filter:sepia(1)}100%{opacity:0;transform:translateY(-35px) scale(.65);filter:blur(8px)}}
+.empty{text-align:center;padding:35px;color:var(--muted);font-size:14px}.info-list{display:grid;gap:12px}.info-item{padding:18px;border:1px solid var(--line);border-radius:14px}.info-item p{font-size:13px;line-height:1.7;color:var(--muted);margin:7px 0 0}
+.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:#252525;color:white;padding:12px 18px;border-radius:99px;font-size:13px;opacity:0;pointer-events:none;transition:.25s}.toast.show{opacity:1}
+.mobile-nav{display:none}
+@media(max-width:760px){.app{display:block}.sidebar{display:none}main{padding:24px 18px 95px}.hero{padding:25px}.hero h1{font-size:28px}.grid{gap:10px}.card{padding:16px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding:9px 4px calc(9px + env(safe-area-inset-bottom));z-index:5}.mobile-nav button{border:0;background:none;font-size:11px;color:#666;display:grid;gap:3px;justify-items:center}.mobile-nav button span{font-size:19px}h1{font-size:26px}}
+@media(min-width:761px){.mobile-nav{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div><div class="logo">RE:MIND</div><div class="tagline">반복되는 기억과 감정을 정리하는 시간</div></div>
+  <nav class="nav">
+    <button class="active" data-page="home">⌂　홈</button>
+    <button data-page="records">▤　기록</button>
+    <button data-page="emotion">♡　감정 정리</button>
+    <button data-page="help">◎　도움 정보</button>
+  </nav>
+<div class="side-note">기억을 억지로 지우기보다<br><b>내 감정을 이해하는 시간.</b><br><br>천천히, 나에게 맞는 방법을 찾아보세요.<br><br>🔒 기록은 이 브라우저에만 저장돼요.</div>
+</aside>
+<main>
+  <div class="topline"><div class="eyebrow">A MOMENT FOR YOUR MIND</div><div class="date" id="today"></div></div>
+  <section id="home" class="page">
+    <div class="hero"><div class="eyebrow">WELCOME TO RE:MIND</div><h1>오늘은 어떤 마음인가요?</h1><p>떠오르는 기억과 감정을 천천히 살펴보세요.<br>지금의 마음을 기록하는 것부터 시작해도 괜찮아요.</p><button class="btn" onclick="startRecord()">기억 기록하기　→</button></div>
+    <div class="grid">
+      <div class="card feature"><div><div class="icon">♡</div><h3>감정 정리 활동</h3><p>생각과 감정을 글로 표현하고 정리하기</p></div><button class="btn light small" onclick="go('emotion')">활동 시작하기 →</button></div>
+      <div class="card feature"><div><div class="icon">◎</div><h3>대처 방법 알아보기</h3><p>도움이 되는 방법과 정보를 살펴보기</p></div><button class="btn light small" onclick="go('help')">도움 정보 보기 →</button></div>
+    </div>
+    <div class="section-head"><h2>지난 기록</h2><button class="btn light small" onclick="go('records')">전체 보기 →</button></div>
+    <div id="recentRecords"></div>
+  </section>
+
+  <section id="recordForm" class="page hidden">
+    <div class="eyebrow">MY MEMORY</div><h1>기억 기록하기</h1><p class="sub">떠오른 상황과 그때의 감정을 천천히 적어보세요.</p>
+    <div class="panel">
+      <div class="stepbar"><span class="done"></span><span id="bar2"></span><span id="bar3"></span></div>
+      <div id="step1">
+        <div class="field"><label>1. 어떤 상황에서 기억이 떠올랐나요?</label><textarea id="situation" maxlength="200" placeholder="상황을 자유롭게 작성해 주세요."></textarea><div class="hint" style="text-align:right">최대 200자</div></div>
+        <div class="actions"><button class="btn light" onclick="go('home')">취소</button><button class="btn" onclick="nextStep(2)">다음 →</button></div>
+      </div>
+      <div id="step2" class="hidden">
+        <div class="field"><label>2. 어떤 것이 기억을 떠올리게 했나요?</label><p class="hint">해당하는 항목을 선택하거나 직접 작성해 주세요. (복수 선택 가능)</p><div class="choices" id="triggers"><button class="choice">장소</button><button class="choice">사람</button><button class="choice">특정 단어</button><button class="choice">냄새</button><button class="choice">소리</button><button class="choice">SNS / 사진</button><button class="choice">기타</button></div><input type="text" id="triggerOther" placeholder="직접 입력 (선택)" style="margin-top:10px"></div>
+        <div class="actions"><button class="btn light" onclick="nextStep(1)">← 이전</button><button class="btn" onclick="nextStep(3)">다음 →</button></div>
+      </div>
+      <div id="step3" class="hidden">
+        <div class="field"><label>3. 그때 어떤 감정을 느꼈나요?</label><p class="hint">가장 가까운 감정을 선택해 주세요. (복수 선택 가능)</p><div class="choices" id="emotions"><button class="choice">불안</button><button class="choice">슬픔</button><button class="choice">화남</button><button class="choice">수치심</button><button class="choice">우울</button><button class="choice">외로움</button><button class="choice">죄책감</button><button class="choice">기타</button></div></div>
+        <div class="field"><label>4. 기억이 떠올랐을 때의 불편함 정도는?</label><input class="range" id="severity" type="range" min="1" max="5" value="3" oninput="document.getElementById('severityValue').textContent=this.value+' / 5'"><div class="range-labels"><span>전혀 불편하지 않아요</span><b id="severityValue">3 / 5</b><span>매우 불편했어요</span></div></div>
+        <div class="field"><label>5. 추가로 남기고 싶은 내용 <span class="hint">(선택)</span></label><textarea id="extra" maxlength="300" placeholder="지금의 생각이나 하고 싶은 말을 적어보세요." style="min-height:75px"></textarea></div>
+        <div class="actions"><button class="btn light" onclick="nextStep(2)">← 이전</button><button class="btn" onclick="saveRecord()">기록 저장하기 →</button></div>
+      </div>
+      <div id="recordDone" class="hidden success"><div class="check">✓</div><h2>기록이 완료되었습니다!</h2><p class="sub">지금의 감정을 기록한 것만으로도 충분해요.</p><br><button class="btn" onclick="go('records')">기록 내용 보기</button> <button class="btn light" onclick="go('home')">홈으로 가기</button></div>
+    </div>
+  </section>
+
+  <section id="records" class="page hidden">
+<div class="eyebrow">MY JOURNAL</div><h1>나의 기록</h1><p class="sub">작성한 기억과 감정을 다시 확인하고 관리할 수 있어요. 기록은 현재 사용 중인 브라우저에만 저장되며, 원할 때 직접 삭제할 수 있어요.</p><div id="allRecords" style="margin-top:20px"></div>
+  </section>
+
+  <section id="emotion" class="page hidden">
+    <div class="eyebrow">EMOTION CARE</div><h1>지금, 마음을 정리해요</h1><p class="sub">떠오르는 기억과 감정을 글로 적고, 나만의 방식으로 마무리해 보세요.</p>
+    <div class="panel">
+      <h2>1. 기억을 글로 적어보세요</h2><p class="sub">떠오르는 생각이나 감정을 자유롭게 적어주세요. 부담 갖지 않아도 괜찮아요.</p>
+      <textarea id="emotionText" maxlength="500" placeholder="여기에 내용을 입력하세요..." style="margin-top:15px;min-height:145px"></textarea><div class="hint" style="text-align:right"><span id="emotionCount">0</span> / 500</div>
+      <hr style="border:0;border-top:1px solid var(--line);margin:25px 0">
+      <h2>2. 준비가 되면, 마무리해 보세요</h2><p class="sub">글을 정리하는 상징적인 활동이에요. 실제 기록은 삭제되지 않습니다.</p>
+      <div class="burn-area"><div class="paper" id="paper">내 마음을<br>천천히 바라봅니다.</div></div>
+      <button class="btn full" onclick="burnPaper()">종이 태우기　→</button>
+      <p class="hint" style="text-align:center;margin-top:10px">이 애니메이션은 감정 정리를 위한 시각적 표현입니다.</p>
+    </div>
+    <div class="section-head"><h2>나의 활동 기록</h2><button class="btn light small" onclick="go('records')">전체 보기 →</button></div><div id="emotionHistory"></div>
+  </section>
+
+  <section id="help" class="page hidden">
+    <div class="eyebrow">TAKE A BREATH</div><h1>도움이 필요할 때</h1><p class="sub">기억이 반복해서 떠올라 괴로울 때 시도해 볼 수 있는 방법이에요.</p>
+    <div class="info-list" style="margin-top:22px">
+      <div class="info-item"><h3>01. 지금 이 순간에 집중하기</h3><p>주변에서 보이는 것 5가지, 들리는 것 4가지, 느껴지는 것 3가지를 천천히 찾아보세요. 현재의 환경에 주의를 돌리는 데 도움이 될 수 있어요.</p></div>
+      <div class="info-item"><h3>02. 호흡 천천히 가다듬기</h3><p>편안한 자세로 앉아 무리하지 않는 범위에서 천천히 숨을 들이쉬고 내쉬어 보세요. 호흡에 집중하며 잠시 쉬어가도 괜찮아요.</p></div>
+      <div class="info-item"><h3>03. 감정을 글로 표현하기</h3><p>지금 떠오르는 생각과 감정을 판단하지 않고 적어보세요. 문장이 완벽하지 않아도 괜찮아요.</p></div>
+      <div class="info-item"><h3>04. 믿을 수 있는 사람에게 이야기하기</h3><p>혼자 감당하기 어렵다면 믿을 수 있는 친구, 가족 또는 상담 전문가에게 현재의 어려움을 이야기해 보세요.</p></div>
+      <div class="info-item"><h3>05. 전문적인 도움 요청하기</h3><p>괴로운 기억이 지속되거나 일상생활에 큰 영향을 준다면 정신건강복지센터나 전문 상담기관에 도움을 요청할 수 있어요. 긴급한 위험이 있다면 112 또는 119에 연락하세요.</p></div>
+    </div>
+    <div class="panel"><h3>기억해 주세요</h3><p class="sub">이 서비스는 감정을 기록하고 정리하는 데 도움을 주기 위한 도구이며, 전문적인 진단이나 치료를 대신하지 않습니다. 모든 감정을 혼자 해결해야 하는 것은 아니에요.</p></div>
+  </section>
+</main>
+</div>
+<nav class="mobile-nav">
+<button onclick="go('home')"><span>⌂</span>홈</button><button onclick="go('records')"><span>▤</span>기록</button><button onclick="go('emotion')"><span>♡</span>감정 정리</button><button onclick="go('help')"><span>◎</span>도움 정보</button>
+</nav>
+<div class="toast" id="toast"></div>
+<script>
+const pages=['home','recordForm','records','emotion','help'];
+let step=1, selectedTriggers=[], selectedEmotions=[];
+const $=id=>document.getElementById(id);
+const getRecords=()=>JSON.parse(localStorage.getItem('remind_records')||'[]');
+const setRecords=x=>localStorage.setItem('remind_records',JSON.stringify(x));
+$('today').textContent=new Intl.DateTimeFormat('ko-KR',{year:'numeric',month:'long',day:'numeric'}).format(new Date());
+function go(page){
+ pages.forEach(p=>$(p).classList.toggle('hidden',p!==page));
+ document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
+ if(page==='home')renderRecent();if(page==='records')renderAll();if(page==='emotion')renderEmotionHistory();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.page)));
+function startRecord(){resetForm();go('recordForm')}
+function resetForm(){step=1;['situation','triggerOther','extra'].forEach(id=>$(id).value='');$('severity').value=3;$('severityValue').textContent='3 / 5';selectedTriggers=[];selectedEmotions=[];document.querySelectorAll('.choice').forEach(b=>b.classList.remove('selected'));showStep(1)}
+function showStep(n){step=n;[1,2,3].forEach(i=>$('step'+i).classList.toggle('hidden',i!==n));$('recordDone').classList.add('hidden');$('bar2').classList.toggle('done',n>=2);$('bar3').classList.toggle('done',n>=3)}
+function nextStep(n){if(n===2&&step===1&&!$('situation').value.trim()){toast('상황을 간단히 적어주세요.');return}showStep(n)}
+document.querySelectorAll('#triggers .choice').forEach(b=>b.onclick=()=>toggleChoice(b,selectedTriggers));
+document.querySelectorAll('#emotions .choice').forEach(b=>b.onclick=()=>toggleChoice(b,selectedEmotions));
+function toggleChoice(b,a){b.classList.toggle('selected');if(a.includes(b.textContent))a.splice(a.indexOf(b.textContent),1);else a.push(b.textContent)}
+function saveRecord(){
+ if(!selectedEmotions.length){toast('감정을 하나 이상 선택해 주세요.');return}
+ const r={id:Date.now(),date:new Date().toISOString(),situation:$('situation').value.trim(),triggers:[...selectedTriggers,...($('triggerOther').value.trim()?[$('triggerOther').value.trim()]:[])],emotions:selectedEmotions.slice(),severity:+$('severity').value,extra:$('extra').value.trim()};
+ const all=getRecords();all.unshift(r);setRecords(all);[1,2,3].forEach(i=>$('step'+i).classList.add('hidden'));$('recordDone').classList.remove('hidden');
+}
+function dateText(d){return new Date(d).toLocaleDateString('ko-KR',{year:'numeric',month:'2-digit',day:'2-digit'})}
+function recordHTML(r){return `<div class="record-row"><div style="min-width:0;flex:1"><b>${escapeHTML(r.situation||'상황 기록')}</b><p>${dateText(r.date)} · 불편함 ${r.severity}/5</p><div>${r.emotions.map(e=>`<span class="tag">${escapeHTML(e)}</span>`).join('')}</div></div><div style="display:flex;gap:7px;flex-shrink:0"><button class="btn light small" onclick="viewRecord(${r.id})">보기</button><button class="btn light small" aria-label="기록 삭제" onclick="deleteRecord(${r.id})">삭제</button></div></div>`}
+function renderRecent(){let a=getRecords().slice(0,2);$('recentRecords').innerHTML=a.length?a.map(recordHTML).join(''):'<div class="empty">아직 작성한 기록이 없어요.<br>첫 번째 기억을 기록해 보세요.</div>'}
+function renderAll(){let a=getRecords();$('allRecords').innerHTML=a.length?a.map(recordHTML).join(''):'<div class="empty">아직 작성한 기록이 없습니다.</div>'}
+function viewRecord(id){const r=getRecords().find(x=>x.id===id);if(!r)return;const detail=`날짜: ${dateText(r.date)}\\n\\n상황: ${r.situation}\\n\\n트리거: ${r.triggers.join(', ')||'미선택'}\\n\\n감정: ${r.emotions.join(', ')}\\n\\n불편함 정도: ${r.severity}/5\\n\\n추가 내용: ${r.extra||'없음'}`;alert(detail)}
+function deleteRecord(id){const r=getRecords().find(x=>x.id===id);if(!r)return;if(!confirm('이 기록을 삭제할까요? 삭제한 기록은 복구할 수 없습니다.'))return;setRecords(getRecords().filter(x=>x.id!==id));renderAll();renderRecent();renderEmotionHistory();toast('기록을 삭제했습니다.')}
+$('emotionText').addEventListener('input',()=>$('emotionCount').textContent=$('emotionText').value.length);
+function burnPaper(){const t=$('emotionText').value.trim();if(!t){toast('먼저 마음을 글로 적어보세요.');return}const p=$('paper');p.textContent=t.slice(0,70);p.classList.remove('burning');void p.offsetWidth;p.classList.add('burning');setTimeout(()=>{p.classList.remove('burning');p.textContent='새로운 마음으로';$('emotionText').value='';$('emotionCount').textContent='0';toast('활동을 마쳤어요. 수고했어요.')},2300)}
+function renderEmotionHistory(){let a=getRecords().slice(0,3);$('emotionHistory').innerHTML=a.length?a.map(r=>`<div class="record-row"><div><b>${dateText(r.date)}</b><p>${escapeHTML(r.situation||'감정 정리 기록')}</p><span class="tag">${escapeHTML(r.emotions[0]||'감정')}</span></div></div>`).join(''):'<div class="empty">아직 활동 기록이 없어요.</div>'}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+let toastTimer;function toast(s){$('toast').textContent=s;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2200)}
+renderRecent();
+</script>
+</body>
+</html>
